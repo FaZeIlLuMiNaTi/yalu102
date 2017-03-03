@@ -1,4 +1,26 @@
-# yalu102
+# yalu102 with [Termius](https://itunes.apple.com/us/app/termius-ssh-shell-console-terminal/id549039908?mt=8) support
+
+## Explanation
+
+Termius is an SSH client for iOS avaiable from the AppStore. Unfortunately, iOS blocks port 22 (along with some others), meaning we can't natively use it as a MobileTerminal alternative. This fork aims to solve that issue. Instead of trying to connect to port 22 through Termius, we can connect to port 9022, which isn't blacklisted by Apple.
+
+## Instructions for use with Termius
+
+Run the Yalu app and jailbreak (with the remote SSH access switch enabled)
+Install Termius from the AppStore
+
+Create a new host in Termius, and enter these settings:
+Alias: iPhone (anything you want)
+Username: mobile (or root if you're into that)
+Hostname: 127.0.0.1
+Port: 9022
+Password: whatever your mobile (or root) password is (alpine by default)
+
+After pressing save, just tap on the host you just created and enjoy Termius
+
+## Download
+
+You can download a compiled .ipa of this fork from [here](https://www.fazeilluminati.com/Yalu_SSH.ipa) or clone this repository and build it yourself using xcode
 
 ![Yalu logo](https://github.com/kpwn/yalu102/blob/master/yalu102/Assets.xcassets/AppIcon.appiconset/AppIcon60x60@3x.png?raw=true)
 
