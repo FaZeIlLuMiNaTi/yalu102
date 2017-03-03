@@ -910,17 +910,37 @@ remappage[remapcnt++] = (x & (~PMK));\
             copyfile([dropbearPlistPath UTF8String], "/Library/LaunchDaemons/dropbear.plist", 0, COPYFILE_ALL);
             chmod("/Library/LaunchDaemons/dropbear.plist", 0644);
             chown("/Library/LaunchDaemons/dropbear.plist", 0, 0);
-            if (cfg_enable_remote_ssh) {
+            
+            
+            unlink("/Library/LaunchDaemons/dropbear2.plist"); // Remove the old dropbear2.plist (I assume this is needed)
+            copyfile([dropbearPlistPath UTF8String], "/Library/LaunchDaemons/dropbear2.plist", 0, COPYFILE_ALL); // Grab a copy of the original from the resources folder, copy it, and name it dropbear2.plist
+            chmod("/Library/LaunchDaemons/dropbear2.plist", 0644); // Chmod it
+            chown("/Library/LaunchDaemons/dropbear2.plist", 0, 0); // Chown it
+            
+            if (cfg_enable_remote_ssh) { // Thx to the mologie who I forked this from :)
                 NSLog(@"enabling SSH remote access");
+                
+                /* Original dropbear on port 22 */
                 NSMutableDictionary* md = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/Library/LaunchDaemons/dropbear.plist"];
                 NSMutableArray *a = [NSMutableArray arrayWithArray:[md valueForKey:@"ProgramArguments"]];
                 a[4] = @"22";
                 [md setValue:a forKey:@"ProgramArguments"];
                 [md writeToFile:@"/Library/LaunchDaemons/dropbear.plist" atomically:YES];
+                
+                /* Duplicated dropbear on port 9022 */
+                // We're creating another instance of dropbear on port 9022 because it's not a blacklisted port (unlike 22), this means we can use Termius from the AppStore as our SSH client
+                NSMutableDictionary* md2 = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/Library/LaunchDaemons/dropbear2.plist"]; // Get the dropbear2.plist
+                NSMutableArray *a2 = [NSMutableArray arrayWithArray:[md valueForKey:@"ProgramArguments"]]; // Get the array inside of the plist
+                a2[4] = @"9022"; // Set the 4th object in the array to 9022 (this is the port we're using)
+                [md2 setValue:a2 forKey:@"ProgramArguments"]; // Set the array in the plist
+                NSString *s2 = [NSString stringWithString:[md2 valueForKey:@"Label"]]; // Get the label string inside of the plist
+                s2 = @"dropbear2"; // Set the label string to be dropbear2, so it can run as a different process
+                [md2 setValue:s2 forKey:@"Label"]; // Set the string into the plist
+                [md2 writeToFile:@"/Library/LaunchDaemons/dropbear2.plist" atomically:YES]; // Save changes to this plist
             }
         }
     }
-
+    
     /*
     chmod("/private", 0777);
     chmod("/private/var", 0777);

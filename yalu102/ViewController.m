@@ -30,7 +30,7 @@
     uname(&u);
     if (strstr(u.version, "MarijuanARM")) {
         [self.dope setEnabled:NO];
-        [self.dope setTitle:@"already jailbroken" forState:UIControlStateDisabled];
+        [self.dope setTitle:@"already jelbrekd" forState:UIControlStateDisabled];
         return;
     }
 
@@ -73,11 +73,11 @@
         jailbreak();
 
         [self.dope setEnabled:NO];
-        [self.dope setTitle:@"already jailbroken" forState:UIControlStateDisabled];
+        [self.dope setTitle:@"already jelbrekd" forState:UIControlStateDisabled];
         [self.sshView setHidden:YES];
     }
     else {
-        [self.dope setTitle:@"failed, retry?" forState:UIControlStateNormal];
+        [self.dope setTitle:@"dis shits unstable" forState:UIControlStateNormal];
     }
 }
 
