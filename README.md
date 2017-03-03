@@ -7,14 +7,15 @@ Termius is an SSH client for iOS avaiable from the AppStore. Unfortunately, iOS 
 ## Instructions for use with Termius
 
 Run the Yalu app and jailbreak (with the remote SSH access switch enabled)
+
 Install Termius from the AppStore
 
-Create a new host in Termius, and enter these settings:
-Alias: iPhone (anything you want)
-Username: mobile (or root if you're into that)
-Hostname: 127.0.0.1
-Port: 9022
-Password: whatever your mobile (or root) password is (alpine by default)
+1. Create a new host in Termius, and enter these settings:
+2. Alias: iPhone (anything you want)
+3. Username: mobile (or root if you're into that)
+4. Hostname: 127.0.0.1
+5. Port: 9022
+6. Password: whatever your mobile (or root) password is (alpine by default)
 
 After pressing save, just tap on the host you just created and enjoy Termius
 
